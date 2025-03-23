@@ -1,0 +1,42 @@
+<%- include('header')%>
+    <%- include('sidebar')%>
+        <%- include('navbar')%>
+                <!-- Content -->
+                <div class="content-wrapper">
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4">Currency</h4>
+                    <!-- Basic Layout & Basic with Icons -->
+                    <div class="row">
+                        <!-- Basic with Icons -->
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Currency Details</h5>
+                                <!-- Account -->
+                                <form action="" method="post">
+                                        <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"
+                                                        for="basic-icon-default-fullname">Currency</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-select" id="inputGroupSelect01"
+                                                            name="currency">
+                                                            <option value="" disabled selected>Choose...</option>
+                                                            <option value="INR" <% if (selectedCurrency==="INR" ) { %>
+                                                                selected<% } %>>₹ (INR)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-end">
+                                                    <div class="col-sm-10">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            <!-- / Content -->
+            <%- include('footer') %>

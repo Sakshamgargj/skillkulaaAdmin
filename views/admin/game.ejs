@@ -1,0 +1,86 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+                <li>  <i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></li>
+                <li class="breadcrumb-item">Game</li>
+                <li class="breadcrumb-item active" aria-current="page">Add Game</li>
+            </ol>
+        </nav>
+        <!-- Basic Layout & Basic with Icons -->
+        <div class="row">
+            <!-- Basic with Icons -->
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">Add Game</h5>
+                    <!-- Account -->
+                    <form action="/game" method="post">
+                        <div class="card-body">
+
+                            <% if (typeof message !== 'undefined') { %>
+                                <p style="color: rgb(255, 0, 0);"> <%= message %> </p>
+                            <% } %>
+
+                            <% if (flash.error.length > 0) { %>
+                                <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold" role="alert">  <%= flash.error %>   </div>
+                            <% } %>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Game Level -->
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-course">Level</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <label class="input-group-text" for="inputGroupSelect01">Level</label>
+                                                <select class="form-select" required name="level" id="inputGroupSelect01">
+                                                    <option value="" disabled selected>Choose....</option>
+                                                    <option value="level1">level-1</option>
+                                                    <option value="level2">level-2</option>
+                                                    <option value="level3">level-3</option>
+                                                    <option value="level4">level-4</option>
+                                                    <option value="level5">level-5</option>
+                                                    <option value="level6">level-6</option>
+                                                    <option value="level7">level-7</option>
+                                                    <option value="level8">level-8</option>
+                                                    <option value="level9">level-9</option>
+                                                    <option value="level10">level-10</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Game Title -->
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-assignment">Words</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <span id="basic-icon-default-fullname2" class="input-group-text"> <i class="bx bx-user"></i> </span>
+                                                <input type="text" class="form-control" name="words" required id="basic-icon-default-assignment" placeholder="eg.(CAT, BAT, RAT)" aria-label="game" aria-describedby="basic-icon-default-fullname2" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="row justify-content-end">
+                                <div class="col-sm-11">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

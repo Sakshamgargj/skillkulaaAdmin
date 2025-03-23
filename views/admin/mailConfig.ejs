@@ -1,0 +1,110 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"> Mail Config</h4>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-md-6">
+        <div class="card mb-6">
+          <h5 class="card-header">Mail Config</h5>
+          <!-- Account -->
+          <form action="/mail-config" method="post">
+            <div class="card-body">
+              <% if (typeof message !=='undefined' ) { %>
+              <p style="color: rgb(255, 0, 0);">
+                <%= message %>
+              </p>
+              <% } %>
+              <% if(flash.error.length> 0){ %>
+              <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold" role="alert">
+                <%= flash.error %>
+              </div>
+              <% } %>
+
+              <!--begin::Input group-->
+              <input type="hidden" name="id" value="<%=  mailData && mailData._id  ? mailData._id : '' %>">
+              <!--end::Input group-->
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Host</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                    <input type="text" class="form-control" name="host" value="<%= mailData && mailData.host  ? mailData.host : '' %>" required id="basic-icon-default-fullname" placeholder="Enter host" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Port</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                    <input type="text" class="form-control" name="port"  placeholder="Enter port" value=" <%= mailData && mailData.port  ? mailData.port : '' %>" required  />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Username</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                    <input type="text" class="form-control" name="mail_username" id="basic-icon-default-fullname" placeholder="Enter username" value="<%= mailData && mailData.mail_username ? mailData.mail_username : '' %>" required  />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row form-password-toggle mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Password</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                      <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    <input type="password" name="mail_password" class="form-control" id="basic-default-password12" placeholder="Enter password" value="<%= mailData && mailData.mail_password ? mailData.mail_password : '' %>" aria-describedby="basic-default-password2" required />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Encryption</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                    <input type="text" class="form-control" name="encryption" value="<%= mailData && mailData.encryption ? mailData.encryption : '' %>" required id="basic-icon-default-fullname" placeholder="Enter encryption" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Sender Email</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                    <input type="email" name="senderEmail" class="form-control" value="<%=  mailData && mailData.senderEmail ? mailData.senderEmail : ''  %>" required id="basic-icon-default-fullname" placeholder="Enter sender email" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

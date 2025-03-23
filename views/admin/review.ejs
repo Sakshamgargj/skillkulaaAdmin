@@ -1,0 +1,77 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Review</li>
+        <li class="breadcrumb-item active" aria-current="page">View All Review</li>
+      </ol>
+    </nav>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Review List</h5>
+      <div class="card-body">
+        <% if(flash.error.length> 0){ %>
+          <div class="d-inline-block text-danger fs-5 ms-3 pb-2 mb-3 fw-bold" role="alert">
+            <%= flash.error %>
+          </div>
+          <% } %>
+        <div class="table-responsive text-nowrap">
+          <table class="table" id="category-table">
+            <thead>
+              <tr class="text-uppercase">
+                <th>SR.NO.</th>
+                <th>User name</th>
+                <th>Course </th>
+                <th>rating</th>
+                <th>comment</th>
+                <th>IsPublish</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              <% let cnt=1 %>
+              <% reviews.forEach(function(review){ %>
+              <tr>
+                <td>
+                  <%= cnt++ %>
+                </td>
+                <td>
+                    <i class="fab fa-angular fa-lg text-danger"></i>
+                     <strong><%= review.userId.firstname %>&nbsp;<%= review.userId.lastname %></strong>
+                </td>
+                <td><i class="fab fa-angular fa-lg text-danger"></i>
+                     <strong><%= review.courseId.course %> </strong>
+                </td>
+                <td><i class="fab fa-angular fa-lg text-danger"></i>
+                    <strong><%= review.rating %> </strong>
+               </td>
+               <td><i class="fab fa-angular fa-lg text-danger"></i>
+                <strong><%= review.review %> </strong>
+                </td>
+                <td>
+                       <form action="/publish-review?id=<%= review._id %>" method="post">
+                        <button type="submit" class="btn py-0 px-2 <%= review.isPublish ? 'btn-success' : 'btn-danger' %>">
+                          <%= review.isPublish ? 'Publish' : 'UnPublish' %>
+                        </button>
+                      </form>
+                </td>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('footer')%>

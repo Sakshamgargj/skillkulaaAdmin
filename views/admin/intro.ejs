@@ -1,0 +1,83 @@
+<%- include('header')%>
+  <%- include('sidebar')%>
+    <%- include('navbar')%>
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+              <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+              <li class="breadcrumb-item">Intro</li>
+              <li class="breadcrumb-item active" aria-current="page">Add Intro</li>
+            </ol>
+          </nav>
+
+          <!-- Basic Layout & Basic with Icons -->
+          <div class="row">
+            <!-- Basic with Icons -->
+            <div class="col-md-6">
+              <div class="card mb-6">
+                <h5 class="card-header">Add Intro</h5>
+                <!-- Account -->
+                <form action="/intro" method="post" enctype="multipart/form-data">
+                  <div class="card-body">
+                    <% if (typeof message !=='undefined' ) { %>
+                      <p style="color: rgb(255, 0, 0);">
+                        <%= message %>
+                      </p>
+                      <% } %>
+                        <% if(flash.error.length> 0){ %>
+                          <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold" role="alert">
+                            <%= flash.error %>
+                          </div>
+                          <% } %>
+                            <div class="row mb-3">
+                              <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Title</label>
+                              <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                  <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                      class="bx bx-user"></i></span>
+                                  <input type="text" class="form-control" name="intro" value="" required
+                                    id="basic-icon-default-fullname" placeholder="Enter Title" aria-label="Splash"
+                                    aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Image</label>
+                              <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                  <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                      class="bx bx-image"></i></span>
+                                  <input type="file" id="upload" name="avatar" class="form-control" required=""
+                                    accept="image/png, image/jpeg,image/jpg">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label class="col-sm-2 col-form-label"
+                                for="basic-icon-default-fullname">Description</label>
+                              <div class="col-sm-10">
+                                <div class="">
+                                  <textarea class="form-control" name="description" id="kt_docs_second_ckeditor_classic"
+                                    placeholder="Add Desciprtion"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row justify-content-end">
+                              <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">Create</button>
+                              </div>
+                            </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- / Content -->
+
+      <%- include('footer')%>

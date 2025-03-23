@@ -1,0 +1,90 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Silder</li>
+        <li class="breadcrumb-item"><a href="/viewslider" class="text-hover-primary">View All Silder</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Silder</li>
+      </ol>
+    </nav>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <h5 class="card-header">Edit slider</h5>
+          <!-- Account -->
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+              <% if (typeof message !=='undefined' ) { %>
+              <p style="color: rgb(255, 0, 0);">
+                <%= message %>
+              </p>
+              <% } %>
+              <div class="row">
+                <div class="col-md-6">
+
+                  <input type="hidden" name="id" value="<%= editslider._id %>">
+
+                       <!-- old image  -->
+                  <input type="hidden" name="oldImage" value="<%= editslider.avatar %>">
+
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Image</label>
+                    <div class="col-sm-10">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="/<%= editslider.avatar %>" alt="<%= editslider.avatar %>" class="d-block rounded border border-gray-300" height="100" width="100"  id="previewImage"/>
+                        <div class="button-wrapper">
+                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                            <span class="d-none d-sm-block">Update Image</span>
+                            <i class="bx bx-upload d-block d-sm-none"></i>
+                            <input type="file" id="upload" name="avatar" class="account-file-input" hidden accept="image/png, image/jpeg,image/jpg" />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Course</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <select class="form-select" name="courseId" id="defaultSelect">
+                          <% if (coursedata.length > 0) { %>
+                          <option value="" disabled selected>Select Course</option>
+                          <% coursedata.forEach(course => { %>
+                          <option value="<%= course._id %>" <%= String(course._id) === String(editslider.courseId._id) ? 'selected' : '' %>>
+                            <%= course.course %>
+                          </option>
+                          <% }); %>
+                          <% } %>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                 
+                </div>
+                <div class="row justify-content-end">
+                  <div class="col-sm-11">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

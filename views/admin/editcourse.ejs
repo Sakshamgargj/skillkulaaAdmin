@@ -1,0 +1,227 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Course</li>
+        <li class="breadcrumb-item"><a href="/viewcourse" class="text-hover-primary">View All Course</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Course</li>
+      </ol>
+    </nav>
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <h5 class="card-header fs-4 fw-bold">Edit Course</h5>
+          <!-- Account -->
+          <form action="" method="post" enctype="multipart/form-data">
+
+            <div class="card-body">
+
+              <% if (typeof message !=='undefined' ) { %>
+              <p style="color: rgb(255, 0, 0);">   <%= message %> </p>
+              <% } %>
+
+              <div class="row">
+                <div class="col-md-12">
+
+                  <input type="hidden" name="editid" value="<%= editcourse.id %>">
+
+                  <input type="hidden" name="oldImage" value="<%= editcourse.avatar %>">
+
+                  <div class="row mb-4">
+                    <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">Image</label>
+                    <div class="col-sm-11">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="/<%= editcourse.avatar %>" alt="<%= editcourse.avatar %>" class="d-block rounded border border-gray-300" height="100" width="100"  id="previewImage" />
+                        <div class="button-wrapper">
+                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                            <span class="d-none d-sm-block">Update Image</span>
+                            <i class="bx bx-upload d-block d-sm-none"></i>
+                            <input type="file" id="upload" name="avatar" class="account-file-input" hidden accept="image/png, image/jpeg,image/jpg" />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bx-book'></i></span>
+                        <input type="text" class="form-control" name="course" value="<%= editcourse.course %>" required id="basic-icon-default-fullname" placeholder="Enter education Title" aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Category</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <label class="input-group-text" for="inputGroupSelect01">Categories</label>
+                        <select class="form-select" name="categoryId" id="defaultSelect">
+                          <% if (categorydata.length > 0) { %>
+                          <option value="" disabled selected>Select Category</option>
+                          <% categorydata.forEach(category => { %>
+                          <option value="<%= category._id %>" <%= String(editcourse.categoryId._id) === String(category._id) ? 'selected' : '' %>>
+                            <%= category.category %>
+                          </option>
+                          <% }); %>
+                          <% } %>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="exampleFormControlSelect2">Instructor</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <label class="input-group-text" for="exampleFormControlSelect2">Instructor</label>
+                        <select multiple class="form-select" id="exampleFormControlSelect2" name="instructorId" aria-label="Multiple select example">
+                          <option value="" disabled>Select Specialist</option>
+                          <% instructordata.forEach((item) => { %>
+                            <% if (editcourse.instructorId && editcourse.instructorId.some(fac => String(fac._id) === String(item._id))) { %>
+                            <option value="<%= item._id %>" selected><%= item.instructor %></option>
+                            <% } else { %>
+                            <option value="<%= item._id %>"><%= item.instructor %></option>
+                            <% } %>
+                            <% }) %>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="defaultSelect">Level</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <label class="input-group-text" for="defaultSelect">Level</label>
+                        <select class="form-select" name="level" id="defaultSelect">
+                          <option value="" disabled selected>Select Level</option>
+                          <option value="Beginner" <%= editcourse.level === 'Beginner' ? 'selected' : '' %>>Beginner</option>
+                          <option value="Intermediate" <%= editcourse.level === 'Intermediate' ? 'selected' : '' %>>Intermediate</option>
+                          <option value="Advanced" <%= editcourse.level === 'Advanced' ? 'selected' : '' %>>Advanced</option>
+                          <option value="Expert" <%= editcourse.level === 'Expert' ? 'selected' : '' %>>Expert</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Required Skills</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bx-code-alt'></i></span>
+                        <input type="text" class="form-control" name="skill" value="<%= editcourse.skill %>" required id="basic-icon-default-fullname" placeholder="Enter Skills" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Duration</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-book"></i></span>
+                        <input type="text" class="form-control" name="duration" value="<%= editcourse.duration %>" required id="basic-icon-default-fullname" placeholder="Date" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Language</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><img src="../assets/img/icons/unicons/language (1).png" alt="" width="15px" height="15px"></span>
+                        <input type="text" class="form-control" name="language" value="<%= editcourse.language %>" required id="basic-icon-default-fullname" placeholder="Enter Language" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Price</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bxs-user-check'></i></span>
+                        <input type="text" class="form-control" name="price" value="<%= editcourse.price %>" required id="basic-icon-default-fullname" placeholder="Enter Course Price" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Link</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bx-link-alt'></i></span>
+                        <input type="text" class="form-control" name="videourl" value="<%= editcourse.videourl %>" id="basic-icon-default-fullname" placeholder="Enter Video Url" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label"   for="basic-icon-default-fullname">Secure</label>
+                    <div class="col-sm-10 d-flex mt-1">
+                      <div class="form-check me-5">
+                        <input class="form-check-input" type="radio" name="is_Secure"  value="true" <% if(editcourse.is_Secure === true){%> checked <%} %>/>
+                        <label class="form-check-label" for="defaultCheck1">True</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_Secure"  value="false" <% if(editcourse.is_Secure === false){%> checked <%} %>/>
+                        <label class="form-check-label" for="defaultCheck2">False </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label"   for="basic-icon-default-fullname">Certified</label>
+                    <div class="col-sm-10 d-flex mt-1">
+                      <div class="form-check me-5">
+                        <input class="form-check-input" type="radio" name="is_Certified"  value="true"  <% if(editcourse.is_Certified === true){%> checked <%} %>/>
+                        <label class="form-check-label" for="defaultCheck1">True</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="is_Certified"  value="false" <% if(editcourse.is_Certified === false){%> checked <%} %>/>
+                        <label class="form-check-label" for="defaultCheck2">False </label>
+                      </div>
+                    </div>
+                  </div>
+                 
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row mb-4">
+                      <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">About Us</label>
+                      <div class="col-sm-11">
+                        <div class="">
+                          <textarea class="form-control" name="about" id="kt_docs_second_ckeditor_classic" placeholder="Write Your content"><%- editcourse.about %></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row justify-content-end">
+                  <div class="col-sm-11">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

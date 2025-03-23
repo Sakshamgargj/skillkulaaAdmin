@@ -1,0 +1,97 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+                <!-- Back Icon -->
+                <li>
+                    <i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i>
+                </li>
+                <li class="breadcrumb-item">Game</li>
+                <li class="breadcrumb-item">
+                    <a href="/viewgame" class="text-hover-primary">View All Game</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Game</li>
+            </ol>
+        </nav>
+
+        <!-- Basic Layout with Icons -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">Edit Game</h5>
+                    <!-- Form to Edit Game -->
+                    <form action="" method="post">
+                        
+                        <div class="card-body">
+
+                            <!-- Display Message if Exists -->
+                            <% if (typeof message !== 'undefined') { %>
+                                <p style="color: rgb(255, 0, 0);">  <%= message %> </p>
+                            <% } %>
+
+                            <!-- Course Selection -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Game Title Input -->
+                                    <div class="row mb-4">
+                                        <div class="row mb-4">
+                                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Level</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <label class="input-group-text" for="inputGroupSelect01">Level</label>
+                                                    <select class="form-select" name="level" id="defaultSelect">
+                                                        <option value="<%= editgame.level %>" selected><%= editgame.level %></option>
+                                                        <option value="" disabled >Choose ....</option>
+                                                        <option value="level1">level-1</option>
+                                                        <option value="level2">level-2</option>
+                                                        <option value="level3">level-3</option>
+                                                        <option value="level4">level-4</option>
+                                                        <option value="level5">level-5</option>
+                                                        <option value="level6">level-6</option>
+                                                        <option value="level7">level-7</option>
+                                                        <option value="level8">level-8</option>
+                                                        <option value="level9">level-9</option>
+                                                        <option value="level10">level-10</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Words</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <span id="basic-icon-default-fullname2" class="input-group-text"> <i class="bx bx-user"></i></span>
+                                                <input type="text" class="form-control" name="words"
+                                                    value="<%= editgame.words %>" required
+                                                    id="basic-icon-default-fullname" placeholder="Enter Game Title"
+                                                    aria-label="game"
+                                                    aria-describedby="basic-icon-default-fullname2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <!-- Save Button -->
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-11">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

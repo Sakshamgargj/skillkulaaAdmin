@@ -1,0 +1,90 @@
+<!-- certificate-form.ejs -->
+<%- include('header') %>
+    <%- include('sidebar') %>
+        <%- include('navbar') %>
+
+            <!-- <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4">Add Certificate</h4>
+
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="certificateTitle" class="form-label">Certificate Title</label>
+                            <input type="text" id="certificateTitle" name="certificateTitle" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="certificateAvatar" class="form-label">Certificate Avatar</label>
+                            <input type="file" id="certificateAvatar" name="certificateAvatar" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Certificate</button>
+                    </form>
+                </div>
+            </div> -->
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Certificate / </span> Add
+                        Certificate
+                    </h4>
+
+                    <!-- Basic Layout & Basic with Icons -->
+                    <div class="row">
+                        <!-- Basic with Icons -->
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Add Certificate</h5>
+                                <!-- Account -->
+                                <form action="" method="post">
+                                    <div class="card-body">
+                                        <% if (typeof message !=='undefined' ) { %>
+                                            <p style="color: rgb(255, 0, 0);">
+                                                <%= message %>
+                                            </p>
+                                            <% } %>
+                                                <% if(flash.error.length> 0){ %>
+                                                    <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold"
+                                                        role="alert">
+                                                        <%= flash.error %>
+                                                    </div>
+                                                    <% } %>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="row mb-3">
+                                                                    <label class="col-sm-2 col-form-label"
+                                                                        for="basic-icon-default-fullname">Certificate
+                                                                        Title</label>
+                                                                    <div class="col-sm-10">
+                                                                        <div class="input-group input-group-merge">
+                                                                            <span id="basic-icon-default-fullname2"
+                                                                                class="input-group-text"><i
+                                                                                    class="bx bx-user"></i></span>
+                                                                            <input type="text" class="form-control"
+                                                                                name="certificateTitle" value=""
+                                                                                required
+                                                                                id="basic-icon-default-fullname"
+                                                                                placeholder="Enter Certificate Title"
+                                                                                aria-describedby="basic-icon-default-fullname2" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row justify-content-end">
+                                                                <div class="col-sm-11">
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Create</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / Content -->
+
+            <%- include('footer') %>

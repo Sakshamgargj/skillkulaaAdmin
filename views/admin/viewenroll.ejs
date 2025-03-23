@@ -1,0 +1,128 @@
+<%- include('header') %>
+<%- include('sidebar') %>
+<%- include('navbar') %>
+
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+              <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+              <li class="breadcrumb-item">Enroll Course</li>
+              <li class="breadcrumb-item active" aria-current="page">View All Enroll Course</li>
+            </ol>
+          </nav>
+
+        <div class="card">
+            <h5 class="card-header">Enroll Course records</h5>
+            <div class="table-responsive text-nowrap">
+                <% if (flash.error.length > 0) { %>
+                    <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold" role="alert">
+                        <%= flash.error %>
+                    </div>
+                <% } %>
+                <table class="table" id="ticket-table">
+                    <thead>
+                        <tr class="text-uppercase">
+                            <th>SR.NO.</th>
+                            <th>USER</th>
+                            <th>COURSE</th>
+                            <th>DATE</th>
+                            <th>PRICE</th>
+                            <th>Course %</th>
+                            <th>Assignment %</th>
+                            <th>Certificate</th>
+                            <th>PAYMENT MODE</th>
+                            <th>PAYMENT</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <% if (myenroll.length > 0) { %>
+                            <% let cnt = 1; %>
+                            <% for (let i = 0; i < myenroll.length; i++) { %>
+                                <tr>
+                                    <td><%= cnt++ %></td>
+                                    <td>
+                                        <strong>
+                                            <%= myenroll[i].userId.firstname %> <%= myenroll[i].userId.lastname %>
+                                        </strong>
+                                    </td>
+                                    <td><%= myenroll[i].courseId ? myenroll[i].courseId.course : "Not Found" %></td>
+                                    <td><%= myenroll[i].date %></td>
+                                    <td><%= myenroll[i].price %></td>
+                                    <td><%= myenroll[i].course_score_percentage %> %</td>
+                                    <td><%= myenroll[i].assignment_score_percentage %> %</td>
+                                    <td>
+                                        <% if (myenroll[i].courseId && myenroll[i].courseId.is_Certified) { %>
+                                            <% if (myenroll[i].certificates_path) { %>
+                                                <a href="/<%= myenroll[i].certificates_path %>" target="_blank">Open</a>
+                                            <% } else { %>
+                                                Assignment Not Completed!
+                                            <% } %>
+                                        <% } else { %>
+                                            No certificate for this course
+                                        <% } %>
+                                    </td>
+                                    <td><%= myenroll[i].paymentMode %></td>
+                                    <td>
+                                        <% if (myenroll[i].payment === "success") { %>
+                                            <span class="btn btn-success py-0 px-3 text-sm">Success</span>
+                                        <% } else if (myenroll[i].payment === "pending") { %>
+                                            <span class="btn btn-info py-0 px-3 text-sm">Pending</span>
+                                        <% } else if (myenroll[i].payment === "processing") { %>
+                                            <span class="btn btn-primary py-0 px-3 text-sm">Processing</span>
+                                        <% } else if (myenroll[i].payment === "hold") { %>
+                                            <span class="btn btn-secondary py-0 px-3 text-sm">Hold</span>
+                                        <% } else { %>
+                                            <span class="btn btn-danger py-0 px-3 text-sm">Cancelled</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <% for (let j = 0; j < loginData.length; j++) { %>
+                                            <% if (String(loginData[j]._id) === locals.user.id) { %>
+                                                <% if (loginData[j].is_admin == 1) { %>
+                                                    <a href="/editenroll?id=<%= myenroll[i]._id %>">
+                                                        <i class="bx bx-edit-alt me-1 text-primary"></i>
+                                                    </a>
+                                                <% } else if (loginData[j].is_admin == 0) { %>
+                                                    <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>edit entroll</b>. As a <b>demo admin</b>, you can only view the content.">
+                                                        <i class="bx bx-edit-alt me-1 text-primary"></i>
+                                                    </a>
+                                                <% } %>
+                                            <% } %>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% } %>
+                        <% } %>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+
+    <!-- Modal for No Access -->
+    <div class="modal fade" id="kt_modal_no_access" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel1">Not Authorized</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <hr>
+            <div class="modal-body">
+              <p class="message-demo" id="modal-message"></p>
+            </div>
+            <hr>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<%- include('footer') %>

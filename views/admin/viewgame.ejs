@@ -1,0 +1,145 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+                <li><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></li>
+                <li class="breadcrumb-item">Game</li>
+                <li class="breadcrumb-item active" aria-current="page">View All Games</li>
+            </ol>
+        </nav>
+
+        <!-- Button to Add More Games -->
+        <div class="button-wrapper">
+            <a href="/game" class="btn btn-primary me-2 mb-4">Add More Games</a>
+        </div>
+
+        <!-- Game Table -->
+        <div class="card">
+            <h5 class="card-header">Game List</h5>
+            <% if(flash.error.length> 0){ %>
+                <div class="d-inline-block text-danger fs-5 ms-3 pb-2 mb-3 fw-bold" role="alert">
+                  <%= flash.error %>
+                </div>
+                <% } %>
+            <div class="table-responsive text-nowrap">
+                <table class="table" id="intro-table">
+                    <thead>
+                        <tr>
+                            <th>SR.</th>
+                            <th>Level</th>
+                            <th>Words</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        <!-- Check if there are games -->
+                        <% if (mygame.length > 0) { %>
+                            <!-- Loop through games using a 'for' loop -->
+                            <% for (let i = 0; i < mygame.length; i++) { %>
+                            <tr>
+                                <!-- Game Number -->
+                                <td class="align-middle"><%= i + 1 %></td>
+                    
+                                <!-- Game Name -->
+                                <td class="align-middle">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <div class="text-xs text-secondary mb-0">
+                                            <strong><%= mygame[i].level %></strong>
+                                        </div>
+                                    </div>
+                                </td>
+                    
+                                <!-- Course Name -->
+                                <td>
+                                    <div class="mb-0 text-sm"><%= mygame[i].words %></div>
+                                </td>
+                    
+                                <!-- Action Buttons (Edit/Delete) with Admin Check -->
+                                <td class="align-middle">
+                                    <% for (let j = 0; j < loginData.length; j++) { %>
+                                        <% if (String(loginData[j]._id) == locals.user.id) { %>
+                                            <% if (loginData[j].is_admin == 1) { %>
+                                                <!-- Edit Button -->
+                                                <a href="/editgame?id=<%= mygame[i].id %>">
+                                                    <i class="bx bx-edit-alt me-1 text-primary"></i>
+                                                </a>
+                                                <!-- Trigger Delete Modal -->
+                                                <a data-bs-toggle="modal" data-bs-target="#delete_game_modal<%= i %>">
+                                                    <i class="bx bx-trash me-1 text-danger"></i>
+                                                </a>
+                                            <% } else { %>
+                                                <!-- Demo User Action (No Access) -->
+                                                <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>edit game</b>. As a <b>demo admin</b>, you can only view the content.">
+                                                    <i class="bx bx-edit-alt me-1 text-primary"></i>
+                                                </a>
+                                                <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>delete game</b>. As a <b>demo admin</b>, you can only view the content.">
+                                                    <i class="bx bx-trash me-1 text-danger"></i>
+                                                </a>
+                                            <% } %>
+                                        <% } %>
+                                    <% } %>
+                                </td>
+                            </tr>
+                    
+                            <!-- Modal for Delete Confirmation -->
+                            <div class="modal fade" id="delete_game_modal<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel<%= i %>">Delete Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <hr>
+                                        <div class="modal-body">
+                                            <!-- Delete Confirmation Message -->
+                                            <p class="message">Are you sure..!! you want to delete the game <strong><%= mygame[i].game %></strong> ? This action will also remove all associated questions and user performance data. ..?</p>
+                                        </div>
+                                        <hr>
+                                        <div class="modal-footer">
+                                            <!-- Confirm Delete Button -->
+                                            <a href="/deletegame?id=<%= mygame[i].id %>">
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        <% }  %>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+      <!-- end :;game table -->
+
+          <!-- Modal for No Access -->
+         <div class="modal fade" id="kt_modal_no_access" tabindex="-1" data-bs-backdrop="static">
+             <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabel1">Not Authorized</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <hr>
+                 <div class="modal-body">
+                   <p class="message-demo" id="modal-message"></p>
+                 </div>
+                 <hr>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+    </div>
+</div>
+
+<%- include('footer')%>

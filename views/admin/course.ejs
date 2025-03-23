@@ -1,0 +1,214 @@
+<%- include('header')%>
+  <%- include('sidebar')%>
+    <%- include('navbar')%>
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+              <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+              <li class="breadcrumb-item"><a href="/viewcourse" class="text-hover-primary">Course</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Add Course</li>
+            </ol>
+        </nav>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-4">
+                <h5 class="card-header fs-4 fw-bold">Add Course</h5>
+                <form action="/course" method="post" enctype="multipart/form-data">
+                  <div class="card-body">
+
+                    <% if (typeof message !=='undefined' ) { %>
+                      <p style="color: rgb(255, 0, 0);">  <%= message %>    </p>
+                    <% } %>
+
+                    <% if(flash.error.length> 0){ %>
+                      <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold" role="alert"><%= flash.error %>   </div>
+                    <% } %>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                    
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><i   class='bx bx-book'></i></span>
+                              <input type="text" class="form-control" name="course" value required id="basic-icon-default-fullname" placeholder="Enter Course Name"  aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Image</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-image"></i></span>
+                              <input type="file" id="upload" name="avatar" class="form-control" required  accept="image/png, image/jpeg,image/jpg" />
+                            </div>
+                          </div>
+                        </div>
+                    
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Category</label>
+                          <div class="col-sm-10">
+                            <div class="input-group">
+                              <label class="input-group-text" for="inputGroupSelect01">Categories</label>
+                              <select class="form-select" required name="categoryId" id="inputGroupSelect01">
+                                <option value disabled selected> Choose.... </option>
+                                <% for(let i in categorydata){ %>
+                                  <option value="<%= categorydata[i].id %>">  <%=categorydata[i].category %></option>
+                                <% } %>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                    
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Instructor</label>
+                          <div class="col-sm-10">
+                            <div class="input-group">
+                              <label class="input-group-text" for="inputGroupSelect01">Instructor's</label>
+                              <select class="form-select select2" required multiple name="instructorId" id="select2Multiple">
+                                <option value disabled selected> Choose.... </option>
+                                <% for(let i in instructordata){ %>
+                                  <option value="<%= instructordata[i].id %>">  <%= instructordata[i].instructor %>   </option>
+                                  <% } %>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                    
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Level</label>
+                          <div class="col-sm-10">
+                            <div class="input-group">
+                              <label class="input-group-text" for="inputGroupSelect01">Difficulty's</label>
+                              <select class="form-select" required name="level" id="inputGroupSelect01">
+                                <option value disabled selected> Choose.... </option>
+                                <option value="Beginner">Beginner </option>
+                                <option value="Intermediate"> Intermediate </option>
+                                <option value="Advanced">Advanced </option>
+                                <option value="Expert">Expert</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Duration</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><i  class='bx bx-time-five'></i></span>
+                              <input type="tel" class="form-control" name="duration" value required id="basic-icon-default-fullname" placeholder="Enter Time Duration"  aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                          </div>
+                        </div>
+                    
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label"   for="basic-icon-default-fullname">Language</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><img  src="../assets/img/icons/unicons/language (1).png" alt width="15px"  height="15px"></span>
+                              <input type="text" class="form-control" name="language" value required    id="basic-icon-default-fullname" placeholder="Enter Language" aria-label="Date"  aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                          </div>
+                        </div>
+                       
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Price</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bxs-user-check'></i></span>
+                              <input type="text" class="form-control" name="price" value required id="basic-icon-default-fullname" placeholder="Enter Course Price" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Link</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><i class='bx bx-link-alt'></i></span>
+                              <input type="text" class="form-control" name="videourl" value required id="basic-icon-default-fullname" placeholder="Enter Video Url (YouTube Video Code)" aria-label="Date"   aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label"   for="basic-icon-default-fullname">Secure</label>
+                          <div class="col-sm-10 d-flex mt-1">
+                            <div class="form-check me-5">
+                              <input class="form-check-input" type="radio" name="is_Secure"  value="true" />
+                              <label class="form-check-label" for="defaultCheck1">True</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="is_Secure"  value="false" />
+                              <label class="form-check-label" for="defaultCheck2">False </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <label class="col-sm-2 col-form-label"   for="basic-icon-default-fullname">Certified</label>
+                          <div class="col-sm-10 d-flex mt-1">
+                            <div class="form-check me-5">
+                              <input class="form-check-input" type="radio" name="is_Certified"  value="true" />
+                              <label class="form-check-label" for="defaultCheck1">True</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="is_Certified"  value="false" />
+                              <label class="form-check-label" for="defaultCheck2">False </label>
+                            </div>
+                          </div>
+                        </div>
+                       
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+
+                        <div class="row mb-3">
+                          <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">Required Skills</label>
+                          <div class="col-sm-11">
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-fullname2" class="input-group-text"><i   class='bx bx-code-alt'></i></span>
+                              <input type="text" class="form-control" name="skill" value required id="basic-icon-default-fullname" placeholder="Enter Skills" aria-label="Date"  aria-describedby="basic-icon-default-fullname2" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">About  Us</label>
+                          <div class="col-sm-11">
+                            <textarea class="form-control" name="about" id="kt_docs_second_ckeditor_classic"  placeholder="Write Your content"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row justify-content-end">
+                      <div class="col-sm-11">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- / Content -->
+
+      <%- include('footer')%>

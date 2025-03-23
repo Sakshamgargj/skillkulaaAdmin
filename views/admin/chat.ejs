@@ -1,0 +1,140 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><a href="" class="text-hover-primary"><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Chat</li>
+      </ol>
+  </nav>
+
+  <div class="app-chat card overflow-hidden">
+    <div class="row g-0">
+
+      <!-- Chat & Contacts -->
+      <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end" id="app-chat-contacts">
+        <div class="sidebar-header px-6 border-bottom d-flex align-items-center">
+          <div class="d-flex align-items-center ms-6 me-6 me-lg-0">
+            <div class="flex-shrink-0 avatar  me-4" data-bs-toggle="sidebar" data-overlay="app-overlay-ex" data-target="#app-chat-sidebar-left">
+              <% if(locals.user.avatar){ %>
+                <img class="user-avatar rounded-circle cursor-pointer" src="<%= locals.user.avatar %>" alt="Avatar">
+              <% }else{ %>
+                <span class="avatar-initial rounded-circle bg-label-primary"><%= locals.user.name.charAt(0) %></span>
+              <% } %>
+            </div>
+            <div class="flex-grow-1 input-group input-group-merge rounded-pill">
+              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search bx-sm"></i></span>
+              <input type="text" class="form-control chat-search-input" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31">
+            </div>
+          </div>
+          <i class="bx bx-x bx-lg cursor-pointer position-absolute top-50 end-0 translate-middle d-lg-none d-block" data-overlay="" data-bs-toggle="sidebar" data-target="#app-chat-contacts"></i>
+        </div>
+        <div class="sidebar-body ps ps--active-y">
+  
+          <!-- Chats -->
+          <ul class="list-unstyled chat-contact-list py-2 mb-0" id="chat-list">
+              <h5 class="text-primary mb-0 px-3 py-2">Chats</h5>
+            <% if(users.length > 0){ %>
+            <% users.forEach(user => { %>
+            <li class="chat-contact-list-item mb-1">
+              <a class="d-flex align-items-center">
+                <div class="flex-shrink-0 avatar">
+                    <input type="hidden" name="userId" value="<%= user._id %>">
+                    <% if(user.avatar){ %>
+                        <img src="<%= user.avatar %>" alt="Avatar" class="rounded-circle">
+                    <% }else{ %>
+                      <span class="avatar-initial rounded-circle bg-label-primary"><%= user.firstname.charAt(0) %></span>
+                    <% } %>
+                </div>
+                <div class="chat-contact-info flex-grow-1 ms-2">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="chat-contact-name text-truncate m-0 fw-normal"><%= user.firstname %> <%= user.lastname %></h6>
+                    <span class="badge bg-label-primary rounded-pill fw-bolder" id="unread-count-<%= user._id %>"></span>
+                  </div>
+                  <small class="chat-contact-status text-truncate fw-semibold"><%= user.email %></small>
+                </div>
+              </a>
+            </li>
+            <% }); %>
+            <% } %>
+           
+          </ul>
+         
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 697px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 481px;"></div></div></div>
+      </div>
+      <!-- /Chat contacts -->
+  
+    <!-- Chat History -->
+<div class="col app-chat-history">
+    <div class="chat-history-wrapper">
+        <div class="chat-history-header border-bottom">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex overflow-hidden align-items-center">
+            <i class="bx bx-menu bx-lg cursor-pointer d-lg-none d-block me-4" data-bs-toggle="sidebar" data-overlay="" data-target="#app-chat-contacts"></i>
+            <div class="flex-shrink-0 avatar">
+              <img src="" alt="Avatar" class="rounded-circle" id="selectedUserAvatar" data-bs-toggle="sidebar" data-overlay="" data-target="#app-chat-sidebar-right">
+              <span class="avatar-initial rounded-circle bg-label-primary" id="selectedUserAvatarInitial"></span>
+            </div>
+            <div class="chat-contact-info flex-grow-1 ms-2">
+              <h6 class="m-0 fw-normal" id="selectedUserName"></h6>
+              <small class="user-status text-body fw-semibold" id="selectedUserEmail"></small>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="chat-history-body ps ps--active-y">
+        <ul class="list-unstyled chat-history" id="chatMessages">
+          <!-- Chat messages will be dynamically inserted here -->
+        </ul>
+        <!-- ... existing scrollbar code ... -->
+      </div> 
+  
+        <!-- begin:: Chat Footer -->
+        <div class="chat-history-footer shadow-xs">
+          <!-- begin:: Chat Form -->
+          <form class="form-send-message d-flex justify-content-between align-items-center" id="chatForm">
+            <!-- hidden input for admin id -->
+            <input type="hidden" name="adminId" value="<%= locals.user._id %>">
+            <!-- hidden input for receiver user id -->
+            <input type="hidden" name="userId" id="receiver-user-id">
+            <!-- message input -->
+            <!-- <textarea id="autosize-demo messageInput" name="content" rows="2" class="form-control message-input border-0 me-4 ms-4 shadow-none" placeholder="Type your message here..."></textarea> -->
+            <input name="content" class="form-control message-input border-0 me-4 ms-4 shadow-none" placeholder="Type your message here..." id="messageInput">
+            <!-- message actions -->
+            <div class="message-actions d-flex align-items-center">
+              <!-- send message button -->
+              <button class="btn btn-primary d-flex send-msg-btn" id="sendMessageBtn">
+                <span class="align-middle d-md-inline-block d-none">Send</span>
+                <i class="bx bx-paper-plane bx-sm ms-md-2 ms-0"></i>
+              </button>
+            </div>
+          </form>
+          <!-- end:: Chat Form -->
+        </div>
+        <!-- end:: Chat Footer -->
+  
+    </div>
+  </div>
+  <!-- /Chat History -->
+
+
+  
+      <div class="app-overlay"></div>
+    </div>
+  </div>
+
+  </div>
+</div>
+<!-- / Content -->
+
+<script src="../assets/js/app-chat.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../assets/js/admin-chat.js"></script>
+<%- include('footer')%>

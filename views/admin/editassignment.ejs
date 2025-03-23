@@ -1,0 +1,94 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+                <!-- Back Icon -->
+                <li>
+                    <i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i>
+                </li>
+                <li class="breadcrumb-item">Assignment</li>
+                <li class="breadcrumb-item">
+                    <a href="/viewassignment" class="text-hover-primary">View All Assignment</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Assignment</li>
+            </ol>
+        </nav>
+
+        <!-- Basic Layout with Icons -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">Edit Assignment</h5>
+                    <!-- Form to Edit Assignment -->
+                    <form action="" method="post">
+                        
+                        <div class="card-body">
+
+                            <!-- Display Message if Exists -->
+                            <% if (typeof message !== 'undefined') { %>
+                                <p style="color: rgb(255, 0, 0);">  <%= message %> </p>
+                            <% } %>
+
+                            <!-- Course Selection -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Assignment Title Input -->
+                                    <div class="row mb-4">
+                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Assignment</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group input-group-merge">
+                                                <span id="basic-icon-default-fullname2" class="input-group-text"> <i class="bx bx-user"></i></span>
+                                                <input type="text" class="form-control" name="assignment"
+                                                    value="<%= editassignment.assignment %>" required
+                                                    id="basic-icon-default-fullname" placeholder="Enter Assignment Title"
+                                                    aria-label="assignment"
+                                                    aria-describedby="basic-icon-default-fullname2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Course</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <label class="input-group-text" for="inputGroupSelect01">Course</label>
+                                                <select class="form-select" name="courseId" id="defaultSelect">
+                                                    <% if (coursedata.length > 0) { %>
+                                                        <option value="" disabled selected>Select Course</option>
+                                                        <% for (let j = 0; j < coursedata.length; j++) { %>
+                                                            <% if (String(editassignment.courseId._id) === String(coursedata[j]._id)) { %>
+                                                                <option value="<%= coursedata[j]._id %>" selected> <%= coursedata[j].course %> </option>
+                                                            <% } else { %>
+                                                                <option value="<%= coursedata[j]._id %>"> <%= coursedata[j].course %> </option>
+                                                            <% } %>
+                                                        <% } %>
+                                                    <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Save Button -->
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-11">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

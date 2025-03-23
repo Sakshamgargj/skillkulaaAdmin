@@ -1,0 +1,135 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Instructor</li>
+        <li class="breadcrumb-item"><a href="/viewinstructor" class="text-hover-primary">View All Instructor</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Instructor</li>
+      </ol>
+    </nav>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <h5 class="card-header">Edit Instructor</h5>
+          <!-- Account -->
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+
+              <% if (typeof message !=='undefined' ) { %>
+              <p style="color: rgb(255, 0, 0);">  <%= message %></p>
+              <% } %>
+
+              <!-- begin row -->
+              <div class="row">
+                <div class="col-md-6">
+
+                  <input type="hidden" name="id" value="<%= editinstructor.id %>">
+
+                  <input type="hidden" name="oldImage" value="<%= editinstructor.avatar %>">
+              
+                  <div class="row mb-4">
+                      <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Image</label>
+                      <div class="col-sm-10">
+                        <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="/<%= editinstructor.avatar %>" alt="<%= editinstructor.avatar %>" class="d-block rounded border border-gray-300" height="100" width="100"  id="previewImage" />
+                        <div class="button-wrapper">
+                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                            <span class="d-none d-sm-block">Update Image</span>
+                            <i class="bx bx-upload d-block d-sm-none"></i>
+                            <input type="file" id="upload" name="avatar" class="account-file-input" hidden accept="image/png, image/jpeg,image/jpg" />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- end ::row -->
+
+              <!-- begin row -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Instructor</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                        <input type="text" class="form-control" name="instructor" value="<%= editinstructor.instructor %>" required id="basic-icon-default-fullname" placeholder="Enter education Title" aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row mb-4">
+                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Degree</label>
+                    <div class="col-sm-10">
+                      <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-book-bookmark"></i></span>
+                        <input type="text" class="form-control" name="degree" value="<%= editinstructor.degree %>" required id="basic-icon-default-fullname" placeholder="Date" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end ::row -->
+
+              <!-- begin row -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row mb-4">
+                  <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Speciality</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-notepad"></i></span>
+                      <input type="text" class="form-control" name="speciality" value="<%= editinstructor.speciality %>" required id="basic-icon-default-fullname" placeholder="Date" aria-label="Date" aria-describedby="basic-icon-default-fullname2" />
+                    </div>
+                  </div>
+                </div>
+            
+                </div>
+              </div>
+              <!-- end ::row -->
+
+                <!-- begin row -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row mb-4">
+                      <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">About Us</label>
+                      <div class="col-sm-11">
+                        <textarea class="form-control" name="about" id="kt_docs_second_ckeditor_classic" placeholder="Write Your content"><%- editinstructor.about %></textarea>
+                      </div>
+                    </div>
+                
+                    <div class="row justify-content-end">
+                      <div class="col-sm-11">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+              
+                  </div>
+                </div>
+                <!-- end ::row -->
+                
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

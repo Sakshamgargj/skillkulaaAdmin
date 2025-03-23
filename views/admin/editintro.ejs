@@ -1,0 +1,84 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Intro</li>
+        <li class="breadcrumb-item"><a href="/viewintro " class="text-hover-primary">View All Intro</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Intro</li>
+      </ol>
+    </nav>
+
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">
+      <!-- Basic with Icons -->
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <h5 class="card-header">Edit Intro</h5>
+          <!-- Account -->
+          <form action="" method="post" enctype="multipart/form-data">
+
+            <div class="card-body">
+
+              <input type="hidden" name="id" value="<%= editintro.id %>">
+              <input type="hidden" name="oldImage" value="<%= editintro.avatar %>">
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Image</label>
+                <div class="col-sm-10">
+                  <div class="d-flex align-items-start align-items-sm-center gap-4">
+                    <img src="/<%= editintro.avatar %>" alt="<%= editintro.avatar %>" class="d-block rounded border border-gray-300" height="100" width="100"  id="previewImage"/>
+                    <div class="button-wrapper">
+                      <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                        <span class="d-none d-sm-block">Update Image</span>
+                        <i class="bx bx-upload d-block d-sm-none"></i>
+                        <input type="file" id="upload" name="avatar" class="account-file-input" hidden accept="image/png, image/jpeg,image/jpg" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Title</label>
+                <div class="col-sm-10">
+                  <div class="input-group input-group-merge">
+                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                    <input type="text" class="form-control" name="intro" value="<%= editintro.intro %>" id="basic-icon-default-fullname" placeholder="Enter Title" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Description</label>
+                <div class="col-sm-10">
+                  <div class="">
+                    <textarea class="form-control" name="description" id="kt_docs_second_ckeditor_classic" placeholder="Add Desciprtion"><%- editintro.description %></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </div>
+
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

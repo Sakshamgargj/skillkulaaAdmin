@@ -1,0 +1,215 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Course</li>
+        <li class="breadcrumb-item active" aria-current="page">view All Course</li>
+      </ol>
+    </nav>
+
+    <div class="button-wrapper">
+      <a href="/course" class="btn btn-primary me-2 mb-4">Add Course </a>
+    </div>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Course all records</h5>
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+          <table class="table" id="category-table">
+            <thead>
+              <tr>
+                <th>SR.NO.</th>
+                <th>CREATED AT</th>
+                <th>STATUS</th>
+                <th>IMAGE</th>
+                <th>Course</th>
+                <th>Instructor</th>
+                <th>Skill</th>
+                <th>URL</th>
+                <th>Duration</th>
+                <th>Level</th>
+                <th>Price</th>
+                <th>Certified</th>
+                <th>Secure</th>
+                <th>Lesson</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              <% if (mycourse.length > 0) { %>
+                <% for (let i = 0; i < mycourse.length; i++) { %>
+                  <tr>
+                    <td><%= i + 1 %></td>
+                    <td><i class="fab fa-angular fa-lg text-danger"></i> <strong>
+                      <% const date = new Date(mycourse[i].createdAt); const year = date.getFullYear(); const month = date.getMonth() + 1; const day = date.getDate(); %>
+                      <%= `${year}/${month}/${day}` %>
+                    </strong></td>
+
+                    <!-- publish/unpublish status -->
+                    <% for(let j in loginData){ %>
+                      <% if(String(loginData[j]._id) === String(locals.user.id)) { %>
+                        <% if(loginData[j].is_admin == 1){ %>
+                          <td data-bs-toggle="modal" data-bs-target="#course_status<%= i %>">
+                            <% if (mycourse[i].status === "Publish") { %>
+                              <div class="badge bg-label-success">Publish</div>
+                            <% } else { %>
+                              <div class="badge bg-label-danger">UnPublish</div>
+                            <% } %>
+                          </td>
+                        <% } else if (loginData[j].is_admin == 0){ %>
+                          <td data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>publish/unpublish course</b>. As a <b>demo admin</b>, you can only view the content.">
+                            <% if (mycourse[i].status === "Publish") { %>
+                              <div class="badge bg-label-success">Publish</div>
+                            <% } else { %>
+                              <div class="badge bg-label-danger">UnPublish</div>
+                            <% } %>
+                          </td>
+                        <% } %>
+                      <% } %>
+                    <% } %>
+
+                    <td>
+                      <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                        <a href="/<%=  mycourse[i].avatar ?  mycourse[i].avatar :"#" %>"  data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xm pull-up"  data-fslightbox="lightbox-basic">
+                          <img src="/<%=  mycourse[i].avatar %>"  class="rounded-circle border border-gray-800" />
+                        </a>
+                      </ul>
+                    </td>
+
+                    <td>
+                      <div class="d-flex flex-column justify-content-center">
+                        <div class="text-xs text-secondary mb-0">
+                          <div class="mb-0 text-sm"><%= mycourse[i].categoryId ? mycourse[i].categoryId.category : 'No category assigned' %></div>
+                        </div>
+                        <div class="mb-0 text-sm"><%= mycourse[i].categoryId.category %></div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <% if  (mycourse[i].instructorId && mycourse[i].instructorId.length > 0) { %>
+                        <% for (let k = 0; k < mycourse[i].instructorId.length; k++) { %>
+                          <%= mycourse[i].instructorId[k].instructor %><br>
+                        <% } %>
+                      <% } else { %>
+                        No Instructor Assigned
+                      <% } %>
+                    </td>
+
+                    <td><%= mycourse[i].skill %></td>
+                    <td><a href="https://www.youtube.com/watch?v=<%= mycourse[i].videourl %>" target="_blank"><i class='bx bx-link-alt'></i></a></td>
+                    <td><%= mycourse[i].duration %></td>
+                    <td><strong><%= mycourse[i].level %></strong></td>
+                    <td>₹<%= mycourse[i].price %></td>
+                    <td><%= mycourse[i].is_Certified %></td>
+                    <td><%= mycourse[i].is_Secure %></td>
+                    <td><a href="/viewlesson?id=<%= mycourse[i]._id %>&name=<%= mycourse[i].course  %>" class="btn btn-primary">View Lesson</a></td>
+                    <td>
+                      <% for (let j = 0; j < loginData.length; j++) { %>
+                        <% if (String(loginData[j]._id) == locals.user.id) { %>
+                          <% if (loginData[j].is_admin == 1) { %>
+                            <a href="/editcourse?id=<%= mycourse[i].id %>">
+                              <i class="bx bx-edit-alt me-1 text-primary"></i>
+                            </a>
+                            <a data-bs-toggle="modal" data-bs-target="#delete_course_modal<%= i %>">
+                              <i class="bx bx-trash me-1 text-danger"></i>
+                            </a>
+                          <% } else if (loginData[j].is_admin == 0) { %>
+                            <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>edit course</b>. As a <b>demo admin</b>, you can only view the content.">
+                              <i class="bx bx-edit-alt me-1 text-primary"></i>
+                            </a>
+                            <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>delete course</b>. As a <b>demo admin</b>, you can only view the content.">
+                              <i class="bx bx-trash me-1 text-danger"></i>
+                            </a>
+                          <% } %>
+                        <% } %>
+                      <% } %>
+                    </td>
+                  </tr>
+
+                  <!-- Modal for Publish/Unpublish Confirmation -->
+                  <div class="modal fade" id="course_status<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel1">Confirmation</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <hr>
+                        <div class="modal-body">
+                          <p class="message">Are you sure..!! you want to <%= (mycourse[i].status === "Publish") ? 'unpublish' : 'publish' %> the course <strong><%= mycourse[i].course %></strong> ..?</p>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                          <a href="/course-status?id=<%= mycourse[i]._id %>">
+                            <button type="button" class="btn btn-primary">
+                              <%=  mycourse[i].status === "Publish" ? 'Unpublish' : 'Publish' %>
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Modal for Delete Confirmation -->
+                  <div class="modal fade" id="delete_course_modal<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel<%= i %>">Delete Confirmation</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <hr>
+                        <div class="modal-body">
+                          <p class="message">Are you sure..!! you want to permanently delete the course <strong><%= mycourse[i].course %></strong> ? This action will also remove all associated lessons, topics, and user performance data. ..?</p>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                          <a href="/deletecourse?id=<%= mycourse[i]._id %>">
+                              <button type="button" class="btn btn-danger">Delete</button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <% } %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- Modal for No Access -->
+    <div class="modal fade" id="kt_modal_no_access" tabindex="-1" data-bs-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Not Authorized</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <hr>
+          <div class="modal-body">
+            <p class="message-demo" id="modal-message"></p>
+          </div>
+          <hr>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<%- include('footer')%>

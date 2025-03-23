@@ -1,0 +1,152 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">User</li>
+        <li class="breadcrumb-item active" aria-current="page">View All User</li>
+      </ol>
+    </nav>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">User records</h5>
+      <div class="table-responsive text-nowrap">
+        <% if(flash.error.length> 0){ %>
+        <div class="d-inline-block text-danger fs-5 ms-3 pb-2 mb-3 fw-bold" role="alert">
+          <%= flash.error %>
+        </div>
+        <% } %>
+        <table class="table" id="intro-table">
+          <thead>
+            <tr>
+              <th>SR.NO.</th>
+              <th>IMAGE</th>
+              <th>USERNAME</th>
+              <th>EMAIL</th>
+              <th>PHONE</th>
+              <th>VERIFY</th>
+              <th>ACTION</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <% if (myuser.length > 0) { %>
+                <% for (let i = 0; i < myuser.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= i+1 %>
+                        </td>
+                        <td>
+                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xm pull-up" title="<%= myuser[i].username %>">
+                                    <img src="/<%= myuser[i].avatar %>" onerror="this.src='../../tmp/default-img.jpg'; this.alt='Default Image';" class="rounded-circle" />
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <strong>
+                                <%= myuser[i].firstname %>&nbsp;<%= myuser[i].lastname %>
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
+                                <%= myuser[i].email %>
+                            </strong>
+                        </td>
+                        <td>
+                            + <%= myuser[i].country_code %> <%= myuser[i].phone %>
+                        </td>
+                        <td>
+                            <% if (myuser[i].isVerified === 1) { %>
+                                <span style="color: blue;">Yes</span>
+                            <% } else { %>
+                                <span style="color: red;">No</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <form action="/useractivation?id=<%= myuser[i]._id %>" method="POST">
+                                <button type="submit" class="btn py-0 px-2 <%= myuser[i].active ? 'btn-primary' : 'btn-danger' %>">
+                                    <%= myuser[i].active ? 'Active' : 'Deactive' %>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <% for (let j = 0; j < loginData.length; j++) { %>
+                                <% if (String(loginData[j]._id) === locals.user.id) { %>
+                                    <% if (loginData[j].is_admin === 1) { %>
+                                      <a  data-bs-toggle="modal" data-bs-target="#delete_user_modal<%= i %>">
+                                        <i class="bx bx-trash me-1 text-danger"></i>
+                                    </a>
+                                    <% } else if (loginData[j].is_admin === 0) { %>
+                                      <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>delete user</b>. As a <b>demo admin</b>, you can only view the content.">
+                                        <i class="bx bx-trash me-1 text-danger"></i>
+                                      </a>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                        </td>
+                    </tr>
+
+                      <!-- Modal for Delete Confirmation -->
+                      <div class="modal fade" id="delete_user_modal<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <hr>
+                                <div class="modal-body">
+                                    <p class="message">Are you sure..!! you want to delete the user <strong><%= myuser[i].firstname %>&nbsp;<%= myuser[i].lastname %></strong> ..?</p>
+                                </div>
+                                <hr>
+                                <div class="modal-footer">
+                                    <a href="/deleteuser?id=<%= myuser[i]._id %>">
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <% } %>
+            <% } %>
+        </tbody>
+        
+        </table>
+
+      </div>
+    </div>
+
+    <!-- Modal for No Access -->
+    <div class="modal fade" id="kt_modal_no_access" tabindex="-1" data-bs-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Not Authorized</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <hr>
+          <div class="modal-body">
+            <p class="message-demo" id="modal-message"></p>
+          </div>
+          <hr>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<%- include('footer')%>

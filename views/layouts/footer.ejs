@@ -1,0 +1,126 @@
+<div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../assets/vendor/libs/popper/popper.js"></script>
+<script src="../assets/vendor/js/bootstrap.js"></script>
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/vendor/js/menu.js"></script>
+<script src="../assets/vendor/fslightbox/fslightbox.bundle.js"></script>
+<script src="../assets/js/select-video.js"></script>
+<script src="../assets/vendor/ckeditor/ckeditor-classic.bundle.js"></script>
+<script src="../assets/js/ckEditor.js"></script>
+<script src="../assets/js/change-video.js"></script>
+<!-- <script src="../assets/js/bootstrap-maxlength.js"></script> -->
+
+
+<!-- endbuild -->
+
+
+
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="../assets/js/dashboards-analytics.js"></script>
+
+ <!-- Payment js -->
+<script src="../assets/js/paymentMethod.js"></script>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script> -->
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        jQuery('#event-table').DataTable({
+            lengthMenu: [
+                [10, 20, 30, 50, -1],
+                [10, 20, 30, 50, 'All'],
+            ],
+            info: false,
+            columnDefs: [{
+                targets: 3
+            }],
+            order: [[3, 'asc']]
+        });
+
+        jQuery('#category-table,#instructor-table,#intro-table,#ticket-table,#topic-table,#salon-table,#lesson-table').DataTable({
+            lengthMenu: [
+                [10, 20, 30, 50, -1],
+                [10, 20, 30, 50, 'All'],
+            ],
+            info: false,
+            paging: true
+        });
+    });
+
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        // Get the current page URL
+        var currentUrl = window.location.href;
+
+        // Loop through each menu item
+        $(".menu-link").each(function () {
+            // Get the href attribute of the menu item
+            var menuItemUrl = $(this).attr("href");
+
+            // Check if the current URL matches the menu item's URL
+            if (currentUrl.includes(menuItemUrl)) {
+                // Add the active class to the menu item
+                $(this).addClass("active");
+
+                // If the menu item has a parent menu, also add the active class to the parent menu item
+                $(this).parents(".menu-item").addClass("active");
+
+                // If the menu item has a menu toggle parent, open the submenu
+                $(this).parents(".menu-item").addClass("open");
+            }
+        });
+    });
+
+</script>
+
+
+<!-- ck editor -->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var modal = document.getElementById('kt_modal_no_access');
+      if (modal) {
+        modal.addEventListener('show.bs.modal', function(event) {
+          var button = event.relatedTarget; // Button that triggered the modal
+          var message = button.getAttribute('data-message'); // Extract message from data attribute
+          var modalMessage = document.getElementById('modal-message');
+          modalMessage.innerHTML = message; // Set the message in the modal
+        });
+      }
+  
+    });
+</script>
+
+
+</body>
+
+</html>

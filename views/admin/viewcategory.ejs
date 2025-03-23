@@ -1,0 +1,185 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<div class="content-wrapper">
+  <!-- Content -->
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <nav aria-label="breadcrumb" class="fs-4">
+      <ol class="breadcrumb">
+        <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+        <li class="breadcrumb-item">Category</li>
+        <li class="breadcrumb-item active" aria-current="page">View All Category</li>
+      </ol>
+    </nav>
+
+    <div class="button-wrapper">
+      <a href="/category" class="btn btn-primary me-2 mb-4">Add More Category</a>
+    </div>
+
+    <!-- begin::card -->
+    <div class="card">
+      <h5 class="card-header">Category all records</h5>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table" id="category-table">
+            <thead>
+              <tr>
+                <th>SR.NO.</th>
+                <th>IMAGE</th>
+                <th>TITLE</th>
+                <th>CREATED AT</th>
+                <th>STATUS</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              <% if (mycategory.length > 0) { %>
+                <% for (let i = 0; i < mycategory.length; i++) { %>
+                  <tr>
+                    <td><%= i + 1 %></td>
+                    <td>
+                      <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                          <a href="/<%=  mycategory[i].avatar ?  mycategory[i].avatar :"#" %>"  data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xm pull-up"  data-fslightbox="lightbox-basic">
+                            <img src="/<%=  mycategory[i].avatar %>"  class="rounded-circle border border-gray-800" />
+                          </a>
+                      </ul>
+                    </td>
+                    <td>
+                      <i class="fab fa-angular fa-lg text-danger"></i>
+                      <strong><%= mycategory[i].category %></strong>
+                    </td>
+                    <td>
+                      <i class="fab fa-angular fa-lg text-danger"></i>
+                      <strong>
+                        <% const date = new Date(mycategory[i].createdAt); const year = date.getFullYear(); const month = date.getMonth() + 1; const day = date.getDate(); %>
+                        <%= `${year}/${month}/${day}` %>
+                      </strong>
+                    </td>
+
+                    <!-- publish/unpublish status -->
+                    <% for(let j in loginData){ %>
+                      <% if(String(loginData[j]._id) === String(locals.user.id)) { %>
+                        <% if(loginData[j].is_admin == 1){ %>
+                          <td data-bs-toggle="modal" data-bs-target="#category_status<%= i %>">
+                            <% if (mycategory[i].status === "Publish") { %>
+                              <div class="badge bg-label-success">Publish</div>
+                            <% } else { %>
+                              <div class="badge bg-label-danger">UnPublish</div>
+                            <% } %>
+                          </td>
+                        <% } else if (loginData[j].is_admin == 0){ %>
+                          <td data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>publish/unpublish category</b>. As a <b>demo admin</b>, you can only view the content.">
+                            <% if (mycategory[i].status === "Publish") { %>
+                              <div class="badge bg-label-success">Publish</div>
+                            <% } else { %>
+                              <div class="badge bg-label-danger">UnPublish</div>
+                            <% } %>
+                          </td>
+                        <% } %>
+                      <% } %>
+                    <% } %>
+
+                    <td>
+                      <% for (let j = 0; j < loginData.length; j++) { %>
+                        <% if (String(loginData[j]._id) == locals.user.id) { %>
+                          <% if (loginData[j].is_admin == 1) { %>
+                            <a href="/editcategory?id=<%= mycategory[i].id %>">
+                              <i class="bx bx-edit-alt me-1 text-primary"></i>
+                            </a>
+                            <a data-bs-toggle="modal" data-bs-target="#delete_category_modal<%= i %>">
+                              <i class="bx bx-trash me-1 text-danger"></i>
+                            </a>
+                          <% } else if (loginData[j].is_admin == 0) { %>
+                            <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>edit category</b>. As a <b>demo admin</b>, you can only view the content.">
+                              <i class="bx bx-edit-alt me-1 text-primary"></i>
+                            </a>
+                            <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" data-message="You don't have permission to <b>delete category</b>. As a <b>demo admin</b>, you can only view the content.">
+                              <i class="bx bx-trash me-1 text-danger"></i>
+                            </a>
+                          <% } %>
+                        <% } %>
+                      <% } %>
+                    </td>
+                  </tr>
+
+                  <!-- Modal for Publish/Unpublish Confirmation -->
+                  <div class="modal fade" id="category_status<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel1">Confirmation</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <hr>
+                        <div class="modal-body">
+                          <p class="message">Are you sure..!! you want to <%= (mycategory[i].status === "Publish") ? 'unpublish' : 'publish' %> the category <strong><%= mycategory[i].category %></strong> ..?</p>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                          <a href="/category-status?id=<%= mycategory[i]._id %>">
+                            <button type="button" class="btn btn-primary">
+                              <%=  mycategory[i].status === "Publish" ? 'Unpublish' : 'Publish' %>
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Modal for Delete Confirmation -->
+                  <div class="modal fade" id="delete_category_modal<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel<%= i %>">Delete Confirmation</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <hr>
+                        <div class="modal-body">
+                          <p class="message">Are you sure..!! you want to delete the category <strong><%= mycategory[i].category %></strong> ? This action will also remove all associated courses, lessons, topics and user performance data ..?</p>
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                          <a href="/deletecategory?id=<%= mycategory[i]._id %>">
+                              <button type="button" class="btn btn-danger">Delete</button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <% } %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- end::card -->
+
+    <!-- Modal for No Access -->
+    <div class="modal fade" id="kt_modal_no_access" tabindex="-1" data-bs-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel1">Not Authorized</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <hr>
+          <div class="modal-body">
+            <p class="message-demo" id="modal-message"></p>
+          </div>
+          <hr>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<%- include('footer')%>

@@ -1,0 +1,137 @@
+<%- include('header')%>
+<%- include('sidebar')%>
+<%- include('navbar')%>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+                <!-- Back Icon -->
+                <li>
+                    <i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i>
+                </li>
+                <li class="breadcrumb-item">Assignment</li>
+                <li class="breadcrumb-item">
+                    <a href="/viewassignment" class="text-hover-primary">View All Assignment</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/viewquiz?id=<%= editquiz.assignmentId._id %>" class="text-hover-primary">View All Quiz</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Quiz</li>
+            </ol>
+        </nav>
+
+        <!-- Edit Quiz Form -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <h5 class="card-header">Edit Question</h5>
+                    <form action="" method="post">
+                        <div class="card-body">
+                            <% if (typeof message !== 'undefined') { %>
+                                <p style="color: rgb(255, 0, 0);"><%= message %></p>
+                            <% } %>
+                            <% if (flash.error.length > 0) { %>
+                                <div class="d-inline-block text-danger fs-5 pb-2 mb-3 fw-bold" role="alert">
+                                    <%= flash.error %>
+                                </div>
+                            <% } %>
+
+                           <div class="row">
+                            <div class="col-md-6">
+                                 <!-- Question Input -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Question</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text">
+                                            <i class='bx bx-book-open'></i>
+                                        </span>
+                                        <input type="text" class="form-control" name="text" value="<%= editquiz.text %>"
+                                               required placeholder="Enter Question" aria-label="education"
+                                               aria-describedby="basic-icon-default-fullname2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option A -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="radioOptionA">
+                                    <input class="form-check-input" type="radio" name="correctOption" value="A"
+                                           id="radioOptionA" <% if (editquiz.correctOption === 'A') { %> checked <% } %> />
+                                </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text" class="form-control" name="optionA"
+                                               value="<%= editquiz.options[0] %>" required placeholder="Enter Option A"
+                                               aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option B -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="radioOptionB">
+                                    <input class="form-check-input" type="radio" name="correctOption" value="B"
+                                           id="radioOptionB" <% if (editquiz.correctOption === 'B') { %> checked <% } %> />
+                                </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text" class="form-control" name="optionB"
+                                               value="<%= editquiz.options[1] %>" required placeholder="Enter Option B"
+                                               aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option C -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="radioOptionC">
+                                    <input class="form-check-input" type="radio" name="correctOption" value="C"
+                                           id="radioOptionC" <% if (editquiz.correctOption === 'C') { %> checked <% } %> />
+                                </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text" class="form-control" name="optionC"
+                                               value="<%= editquiz.options[2] %>" required placeholder="Enter Option C"
+                                               aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option D -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="radioOptionD">
+                                    <input class="form-check-input" type="radio" name="correctOption" value="D"
+                                           id="radioOptionD" <% if (editquiz.correctOption === 'D') { %> checked <% } %> />
+                                </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text" class="form-control" name="optionD"
+                                               value="<%= editquiz.options[3] %>" required placeholder="Enter Option D"
+                                               aria-label="education" aria-describedby="basic-icon-default-fullname2" />
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                           </div>
+
+                            <!-- Save Button -->
+                            <div class="row justify-content-end">
+                                <div class="col-sm-11">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+<%- include('footer')%>

@@ -1,0 +1,135 @@
+<%- include('header') %>
+<%- include('sidebar') %>
+<%- include('navbar') %>
+
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="fs-4">
+            <ol class="breadcrumb">
+              <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+              <li class="breadcrumb-item">Instructor</li>
+              <li class="breadcrumb-item active" aria-current="page">View All Instructor</li>
+            </ol>
+          </nav>
+
+        <div class="button-wrapper">
+          <a href="/instructor" class="btn btn-primary me-2 mb-4">Add More Instructor</a>
+        </div>
+
+        <!-- begin card-->
+        <div class="card">
+            <h5 class="card-header">Instructor all records</h5>
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table" id="instructor-table">
+                        <thead>
+                            <tr>
+                                <th>SR.NO.</th>
+                                <th>IMAGE</th>
+                                <th>TITLE</th>
+                                <th>DEGREE</th>
+                                <th>SPECIALITY</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            <% if (myinstructor.length > 0) { %>
+                                <% for (let i = 0; i < myinstructor.length; i++) { %>
+                                    <tr>
+                                        <td><%= i + 1 %></td>
+                                        <td>
+                                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                                <a href="/<%=  myinstructor[i].avatar ?  myinstructor[i].avatar :"#" %>"  data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xm pull-up"  data-fslightbox="lightbox-basic">
+                                                    <img src="/<%=  myinstructor[i].avatar %>"  class="rounded-circle border border-gray-800" />
+                                                  </a>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <i class="fab fa-angular fa-lg text-danger"></i> 
+                                            <strong><%= myinstructor[i].instructor %></strong>
+                                        </td>
+                                        <td><%= myinstructor[i].degree %></td>
+                                        <td><%= myinstructor[i].speciality %></td>
+                                        <td>
+                                            <% for (let j = 0; j < loginData.length; j++) { %>
+                                                <% if (String(loginData[j]._id) == locals.user.id) { %>
+                                                    <% if (loginData[j].is_admin == 1) { %>
+                                                        <a href="/editinstructor?id=<%= myinstructor[i].id %>">
+                                                            <i class="bx bx-edit-alt me-1 text-primary"></i>
+                                                        </a>
+                                                        <a data-bs-toggle="modal" data-bs-target="#delete_instructor_modal<%= i %>">
+                                                            <i class="bx bx-trash me-1 text-danger"></i>
+                                                        </a>
+                                                    <% } else if (loginData[j].is_admin == 0) { %>
+                                                        <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" 
+                                                           data-message="You don't have permission to <b>edit instructor</b>. 
+                                                           As a <b>demo admin</b>, you can only view the content.">
+                                                            <i class="bx bx-edit-alt me-1 text-primary"></i>
+                                                        </a>
+                                                        <a data-bs-toggle="modal" data-bs-target="#kt_modal_no_access" 
+                                                           data-message="You don't have permission to <b>delete instructor</b>. 
+                                                           As a <b>demo admin</b>, you can only view the content.">
+                                                            <i class="bx bx-trash me-1 text-danger"></i>
+                                                        </a>
+                                                    <% } %>
+                                                <% } %>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal for Delete Confirmation -->
+                                    <div class="modal fade" id="delete_instructor_modal<%= i %>" tabindex="-1" data-bs-backdrop="static">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel<%= i %>">Delete Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <hr>
+                                          <div class="modal-body">
+                                            <p class="message">Are you sure..!! you want to delete the instructor  <strong><%= myinstructor[i].instructor %></strong> ..?</p>
+                                          </div>
+                                          <hr>
+                                          <div class="modal-footer">
+                                            <a href="/deleteinstructor?id=<%= myinstructor[i].id %>">
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                <% } %>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- end::card -->
+        
+        <!-- Modal -->
+        <div class="modal fade" id="kt_modal_no_access" tabindex="-1" data-bs-backdrop="static">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel1">Not Authorized</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <hr>
+             <div class="modal-body">
+               <p class="message-demo" id="modal-message"></p>
+             </div>
+            <hr>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+             </div>
+           </div>
+         </div>
+        </div>
+        
+    </div>
+</div>
+
+<%- include('footer') %>

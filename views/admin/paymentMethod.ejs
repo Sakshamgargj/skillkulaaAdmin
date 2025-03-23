@@ -1,0 +1,114 @@
+<%- include('header')%>
+    <%- include('sidebar')%>
+        <%- include('navbar')%>
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <nav aria-label="breadcrumb" class="fs-4">
+                        <ol class="breadcrumb">
+                          <li class=""><i class='bx bx-arrow-back me-2' style="cursor: pointer; color: #566A7F;"></i></a></li>
+                          <li class="breadcrumb-item">Payment Method</li>
+                          <li class="breadcrumb-item active" aria-current="page">View All Payment Method</li>
+                        </ol>
+                      </nav>
+
+                    <!-- Basic Layout & Basic with Icons -->
+                    <div class="row">
+                        <!-- Basic with Icons -->
+                        <div class="col-md-12">
+                            <div class="card mb-6">
+                                <!-- Account -->
+                                <form action="" method="post">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <h3 class="mt-3 text- property" style="color:green;"><%= message %></h3>
+                                           <% } %>
+                                        <% if(flash.error.length> 0){ %>
+                                            <div class="d-inline-block text-danger fs-5 pb-2" role="alert">
+                                                <%= flash.error %>
+                                            </div>
+                                        <% } %>
+                                        <div class="col-md-12 d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                                            <div class="payment-sec">
+                                                <h4 class="fw-bolder">Razorpay</h4>
+                                                <div class="row mt-4">
+                                                    <div class="col-lg-12">
+                                                        <div class="row mt-8 mb-4">
+                                                            <label class="required form-label fw-semibold col-lg-3">Is Enable</label>
+                                                            <div class="col-lg-8">
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" type="checkbox" name="razorpay_is_enable" id="flexSwitchDefault"
+                                                                    <% if(payment) { if(payment.razorpay_is_enable == 1) { %> checked <% }} %>/>
+                                                                </div>                                                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-4">
+                                                            <label class="required form-label fw-semibold col-lg-3">Mode</label>
+                                                            <div class="col-lg-8">
+                                                                <div class="d-flex gap-5">
+                                                                    <div class="form-check form-check-custom form-check-solid">
+                                                                        <input class="form-check-input" type="radio" id="flexRadioChecked" name="razorpay_mode" value="testMode"
+                                                                        <% if(payment) { if(payment.razorpay_mode == "testMode") { %> checked <% }} else { %> checked <% } %>/>
+                                                                        <label class="form-check-label" for="flexRadioChecked">Test Mode</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-custom form-check-solid">
+                                                                        <input class="form-check-input" type="radio"  id="flexRadioChecked" name="razorpay_mode" value="liveMode"
+                                                                        <% if(payment) { if(payment.razorpay_mode == "liveMode") { %> checked <% }} %>/>
+                                                                        <label class="form-check-label" for="flexRadioChecked">Live Mode</label>
+                                                                    </div>
+                                                                </div>                                                    
+                                                            </div>
+                                                        </div>
+                                                        <div class="razorpay-test-mode">
+                                                            <div class="mb-4 row">
+                                                                <label class="form-label col-lg-3">Key ID</label>
+                                                                <div class="col-lg-8">
+                                                                    <input type="text" name="razorpay_testmode_key_Id" class="form-control form-control-solid" placeholder="Key ID" value="<%= payment ? payment.razorpay_testmode_key_Id :  ''  %>" >
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-4 row">
+                                                                <label class="form-label col-lg-3">Key Secret</label>
+                                                                <div class="col-lg-8">
+                                                                    <input type="text" name="razorpay_testmode_key_secret" class="form-control form-control-solid" placeholder="Key Secret" value="<%= payment ? payment.razorpay_testmode_key_secret :  ''  %>" >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="razorpay-live-mode">
+                                                            <div class="mb-4 row">
+                                                                <label class="form-label col-lg-3">Key ID</label>
+                                                                <div class="col-lg-8">
+                                                                    <input type="text" name="razorpay_livemode_key_Id" class="form-control form-control-solid" placeholder="Key ID" value="<%= payment ? payment.razorpay_livemode_key_Id :  ''  %>" >
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-4 row">
+                                                                <label class="form-label col-lg-3">Key Secret</label>
+                                                                <div class="col-lg-8">
+                                                                    <input type="text" name="razorpay_livemode_key_secret" class="form-control form-control-solid" placeholder="Key Secret" value="<%= payment ? payment.razorpay_livemode_key_secret :  ''  %>" >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-start mt-3 mb-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span class="indicator-label">Submit</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / Content -->
+
+            <%- include('footer')%>
+
+
+           
