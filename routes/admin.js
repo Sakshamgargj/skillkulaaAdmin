@@ -11,7 +11,7 @@ const { isLogin, isLogout } = require("../middleware/auth");
 
 const storage = multer.diskStorage({
     destination: (req, res, cb) => {
-        cb(null, path.join(__dirname, '../tmp'))
+        cb(null, path.join(__dirname, '../uploads'))
     },
     filename: (req, file, cb) => {
         // Get the current timestamp

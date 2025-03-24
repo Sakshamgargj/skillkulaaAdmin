@@ -2,7 +2,7 @@
 const fs = require("fs");
 
 // Defining the path where uploaded images are stored
-const imagePath = './tmp/'
+const imagePath = './uploads/'
 
 // Function to delete an uploaded file
 function deleteImages(filename) {

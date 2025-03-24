@@ -6,7 +6,7 @@ const EnrollModel = require('../models/EnrollModel')
 
 const { createCanvas, loadImage, registerFont } = require('canvas');
 const path = require('path');
-const uploads = path.join('./tmp')
+const uploads = path.join('./uploads')
 const fs = require('fs')
 const AssignmentPercentageModel = require('../models/AssignmentPercentageModel')
 

@@ -1,7 +1,7 @@
 // Importing required modules 
 const fs = require('fs');
 const path = require('path');
-const uploads = path.join('./tmp');
+const uploads = path.join('./uploads');
 
 // Importing models
 const InstructorModel = require('../models/InstructorModel');

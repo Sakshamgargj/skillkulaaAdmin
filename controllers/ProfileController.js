@@ -1,7 +1,7 @@
 const LoginModel = require('../models/LoginModel');
 const fs = require('fs');
 const path = require('path');
-const uploads = path.join('./tmp');
+const uploads = path.join('./uploads');
 
 const profile = async (req, res) => {
 

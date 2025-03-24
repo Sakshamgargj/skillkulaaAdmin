@@ -5,7 +5,7 @@ const otpgenerator = require('otp-generator');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
-const uploads = path.join('./tmp');
+const uploads = path.join('./uploads');
 const { createCanvas, loadImage, registerFont } = require('canvas');
 
 // Importing models
@@ -50,7 +50,7 @@ const { sendAdminNotification, sendUserNotification } = require("../services/sen
 
 
 // Defining the path where uploaded images are stored
-const imagePath = './tmp/'
+const imagePath = './uploads/'
 
 // hash password
 const securePassword = async (password) => {
